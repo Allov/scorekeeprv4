@@ -11,5 +11,10 @@ export const PlayerQueryResolvers = {
 
 export const PlayerPropertyResolvers = {
   id: (player: any) => player.id,
-  name: (player: any) => player.name
+  name: (player: any) => player.name,
+}
+
+export default {
+  Query: PlayerQueryResolvers,
+  Player: PlayerPropertyResolvers,
 }

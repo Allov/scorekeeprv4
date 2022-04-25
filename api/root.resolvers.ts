@@ -1,6 +1,7 @@
-import { PlayerPropertyResolvers, PlayerQueryResolvers } from './players/player.resolvers'
+import PlayerResolvers from './players/player.resolvers'
+import GameResolvers from './games/game.resolvers'
 
-export const resolvers = {
-  Query: PlayerQueryResolvers,
-  Player: PlayerPropertyResolvers
-};
+export const resolvers = [
+  PlayerResolvers,
+  GameResolvers,
+]

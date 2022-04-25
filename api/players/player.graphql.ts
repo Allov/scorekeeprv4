@@ -1,6 +1,5 @@
 import { gql } from 'apollo-server';
 
-
 export const playerTypeDefs = gql`
     type Player {
         id: ID!
@@ -11,4 +10,4 @@ export const playerTypeDefs = gql`
         player(id: ID!): Player
         playerByName(name: String): Player
     }
-`;
+`

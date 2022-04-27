@@ -3,3 +3,8 @@ export const VsCodeConsoleColors = {
   Red: '\u001b[1;31m',
   Reset: '\u001b[0m'
 }
+
+
+export function logError(message: string) {
+  console.error(`${VsCodeConsoleColors.Red}error: ${message} ${VsCodeConsoleColors.Reset}`)
+}

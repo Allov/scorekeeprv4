@@ -1,5 +1,6 @@
 import { Player } from '@prisma/client'
 import { UserInputError } from 'apollo-server'
+import { logError, VsCodeConsoleColors } from '../helpers/console-helpers'
 import { prisma } from '../prisma-singleton'
 import { ScorekeeprContext } from '../scorekeepr-context'
 import { IAddPlayerToGameInput, IPlayerUpdateInput, IRemovePlayerFromGameInput } from './player.types'
@@ -21,7 +22,7 @@ export const PlayerMutationResolvers = {
 
     if (game == null) {
       const message = `Game id ${args.gameId} can't be found or doesn't belong to user ${context.user.id}`;
-      console.error(`\u001b[1;31merror: ${message} \u001b[0m`)
+      console.error(`${VsCodeConsoleColors.Red}error: ${message} ${VsCodeConsoleColors.Reset}`)
       throw new UserInputError(message)
     }
 
@@ -41,8 +42,8 @@ export const PlayerMutationResolvers = {
     })
 
     if (game == null) {
-      const message = `Game id ${args.gameId} can't be found or doesn't belong to user ${context.user.id}`;
-      console.error(`\u001b[1;31merror: ${message} \u001b[0m`)
+      const message = `Game id ${args.gameId} can't be found or doesn't belong to user ${context.user.id}`
+      logError(message)
       throw new UserInputError(message)
     }
 
@@ -58,7 +59,7 @@ export const PlayerMutationResolvers = {
 
     if (updatedPlayer == null) {
       const message = `Player id ${args.id} couldn't be found`;
-      console.error(`\u001b[1;31merror: ${message} \u001b[0m`)
+      logError(message)
       throw new UserInputError(message)
     }
 
@@ -71,7 +72,7 @@ export const PlayerMutationResolvers = {
 
     if (game == null) {
       const message = `Game id ${args.gameId} can't be found or doesn't belong to user ${context.user.id}`;
-      console.error(`\u001b[1;31merror: ${message} \u001b[0m`)
+      logError(message)
       throw new UserInputError(message)
     }
 

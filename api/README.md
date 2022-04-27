@@ -10,12 +10,13 @@
 
 The API needs a `.env` file present in the API's root directory (`/api/.env`)
 
-Variables to set
+### Variables to set
 
 | Variable  | Value  | Description  |
 |---|---|---|
 | `DATABASE_URL`  | `http://localhost:27017/your-database`  | Used to connect to a MongoDB instance |
 | `SESSION_SECRET`  | `my-secret`  | Used to encrypt session cookie ID  |
+| `ENABLE_PRISMA_QUERY_LOGS`  | `true|false`  | Will output prisma database queries on the console.
 
 ## Running the API locally
 

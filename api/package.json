@@ -2,12 +2,12 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "compile": "tsc --noEmit",
-    "start": "nodemon -e ts,graphql -x ts-node --no-cache -r dotenv/config index.ts",
+    "start": "nodemon -e ts,graphql -x ts-node --no-cache -r dotenv/config src/index.ts",
     "debug": "nodemon --inspect -e js -x ts-node --no-cache -r dotenv/config dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

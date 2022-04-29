@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "API Explorer",
       "url": "http://localhost:4000/graphql",
-      "cwd": "${workspaceFolder}/api",
+      "cwd": "${workspaceFolder}/api/src",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "start"
@@ -20,8 +20,8 @@
       "restart": true,
       "protocol": "inspector",
       "trace": true,
-      "cwd": "${workspaceFolder}/api",
-      "localRoot": "${workspaceFolder}/api",
+      "cwd": "${workspaceFolder}/api/src",
+      "localRoot": "${workspaceFolder}/api/src",
       "remoteRoot": "/graphql",
       "sourceMaps": true
     }

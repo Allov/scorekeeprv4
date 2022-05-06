@@ -64,7 +64,7 @@ function MenuButton(props: { onClick?: React.MouseEventHandler, children: React.
 
 function Game() {
 
-  const [players, /*setPlayers*/] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  const [players, /*setPlayers*/] = useState([0, 1, 2, 3]) // useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]);
 
   // function onDelete(index: number) {
 
@@ -72,7 +72,7 @@ function Game() {
 
   return (
     <>
-      <div className="page-height w-full flex flex-grow overflow-auto justify-start p-4 overflow-x-hidden">
+      <div className="game-page-height w-full flex justify-start p-4 overflow-x-hidden">
         <motion.div initial="initial" animate="in" exit="out" variants={animation} className="flex flex-col w-[100vw] space-y-5">
           <h1 className="text-3xl dark:text-slate-100 text-slate-900">
             Game name
@@ -93,23 +93,25 @@ function Game() {
           })}
         </motion.div>
       </div>
-      <motion.footer initial={{opacity: 0, y: 100}} animate={{opacity: 1, y: 0}} exit={{opacity: 0, y: 100}} className="h-[8vh] bg-slate-900 w-full text-slate-100 flex flex-shrink-0 justify-between items-center keyboard-hidden bg-gradient-to-b from-slate-900 to-slate-800">
-        <MenuButton onClick={() => navigator.share({ title: 'sapin', text: 'sapppppin', url: 'https://sapin.com' })}>
-          <ShareIcon className="h-5 w-5" />
-          Share Game
-        </MenuButton>
-        <MenuButton>
-          <PencilAltIcon className="h-5 w-5" />
-          Game Settings
-        </MenuButton>
-        <MenuButton>
-          <RefreshIcon className="h-5 w-5" />
-          Reset Scores
-        </MenuButton>
-        <MenuButton>
-          <UserAddIcon className="h-5 w-5" />
-          Add Player
-        </MenuButton>
+      <motion.footer initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 100 }} className="block fixed bottom-0 z-50 w-full keyboard-hidden sapin">
+        <div className="flex justify-between text-slate-100 bg-gradient-to-b from-slate-900 to-slate-800 h-[10vh]">
+          <MenuButton onClick={() => navigator.share({ title: 'sapin', text: 'sapppppin', url: 'https://sapin.com' })}>
+            <ShareIcon className="h-5 w-5" />
+            Share Game
+          </MenuButton>
+          <MenuButton>
+            <PencilAltIcon className="h-5 w-5" />
+            Game Settings
+          </MenuButton>
+          <MenuButton>
+            <RefreshIcon className="h-5 w-5" />
+            Reset Scores
+          </MenuButton>
+          <MenuButton>
+            <UserAddIcon className="h-5 w-5" />
+            Add Player
+          </MenuButton>
+        </div>
       </motion.footer>
     </>
   )

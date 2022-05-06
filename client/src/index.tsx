@@ -10,6 +10,23 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 )
 
+// handles the window height on mobile where sometimes the address bar is visible and sometimes not.
+// a css variable named --vh will be updated with the true viewport height in px.
+let timeout: number = -1;
+const vh = window.innerHeight
+document.documentElement.style.setProperty('--vh', `${vh}px`)
+
+window.addEventListener('resize', () => {
+  // We execute the same script as before
+  window.clearTimeout(timeout)
+
+  timeout = window.setTimeout(() => {
+    const vh = window.innerHeight;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }, 250)
+
+});
+
 root.render(
   <Provider store={store}>
     <BrowserRouter>

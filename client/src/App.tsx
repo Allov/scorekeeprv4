@@ -10,8 +10,8 @@ import { AnimatePresence } from 'framer-motion'
 function App() {
   var location = useLocation();
   return (
-    <div className="min-h-screen w-full bg-slate-100 dark:bg-slate-100 flex flex-col justify-start items-center">
-      <header className="top-0 z-50 h-20 w-full pl-5 flex flex-shrink-0 items-center border-b-2 bg-gradient-to-t from-slate-200 to-white drop-shadow-md">
+    <div className="w-full bg-slate-100 dark:bg-slate-100 flex flex-col justify-start items-center">
+      <header className="top-0 z-50 h-[10vh] w-full pl-5 flex flex-shrink-0 items-center border-b-2 bg-gradient-to-t from-slate-200 to-white drop-shadow-md">
         <MenuIcon className="h-9 w-9 text-slate-900" />
         <h1 className="pl-2 text-xl font-bold">
           <Link to="/">scorekeepr</Link>

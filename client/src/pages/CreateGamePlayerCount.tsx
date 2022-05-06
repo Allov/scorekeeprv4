@@ -1,5 +1,9 @@
 import { motion } from 'framer-motion'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { RootState } from '../store';
+import { setPlayerCount } from './createGameSlice';
 
 const animation = {
   initial: {
@@ -17,6 +21,29 @@ let backward = false;
 
 function CreateGamePlayerCount() {
   var navigate = useNavigate()
+
+  const playerCount = useSelector((state: RootState) => state.createGame.playerCount)
+  const dispatch = useDispatch();
+
+  const [inputPlayerCount, setInputPlayerCount] = useState(playerCount.toString())
+
+  function validatePlayerCount(e: React.FocusEvent<HTMLInputElement>) {
+    if (Number(e.target.value) > 0) {
+      dispatch(setPlayerCount(Number(e.target.value)))
+    }
+  }
+
+  function updateInternalState(e: React.FocusEvent<HTMLInputElement>) {
+    console.log('?')
+    if (e.target.value == '' || Number(e.target.value) > 0) {
+      setInputPlayerCount(e.target.value)
+      console.log('valid ', inputPlayerCount)
+    } else {
+      setInputPlayerCount(inputPlayerCount)
+      console.log('invalid ', inputPlayerCount)
+    }
+
+  }
 
   function onClickBack() {
     backward = true;
@@ -42,7 +69,15 @@ function CreateGamePlayerCount() {
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
               Number of players
             </label>
-            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="game-player-count" type="number" placeholder="2" />
+            <input
+              onBlur={validatePlayerCount}
+              onChange={updateInternalState}
+              value={inputPlayerCount}
+              min="0"
+              type="number"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="game-player-count"
+              placeholder="2"
+            />
           </div>
           <div className="flex items-center justify-between space-x-1">
             <button onClick={onClickBack} className="bg-slate-100 text-slate-900 hover:bg-slate-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">

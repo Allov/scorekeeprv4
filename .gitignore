@@ -26,3 +26,6 @@ yarn-error.log*
 /api/data/mongo
 
 .vs
+
+*.crt
+*.key

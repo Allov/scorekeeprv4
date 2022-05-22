@@ -5,8 +5,16 @@
 @layer base {
   html {
     -webkit-tap-highlight-color: transparent;
+    background-color: rgb(241 245 249);
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
   }
 }
+
+
 
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -23,20 +31,20 @@
   }
 
   .page-height {
-    height: calc(var(--vh) - 10vh);
+    height: calc(var(--vh) - 5rem);
   }
 
   .game-page-height {
-    height: calc(var(--vh) - 20vh);
-  }
-
-  .sapin {
-    transform: translate3d(0px, 0px, 0px);
+    height: calc(var(--vh) - 8vh - 5rem);
   }
 
   @media (max-height: 500px) {
     .page-height {
-      height: calc(100vh - 5rem);
+      height: calc(var(--vh) - 5rem);
+    }
+
+    .game-page-height {
+      height: calc(var(--vh) - 8vh);
     }
 
     .keyboard-hidden {

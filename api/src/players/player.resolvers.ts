@@ -1,4 +1,4 @@
-import { Player } from '@prisma/client'
+import { Player, Prisma } from '@prisma/client'
 import { UserInputError } from 'apollo-server'
 import { logError, VsCodeConsoleColors } from '../helpers/console-helpers'
 import { prisma } from '../prisma-singleton'
@@ -26,11 +26,18 @@ export const PlayerMutationResolvers = {
       throw new UserInputError(message)
     }
 
+    const playerCount = await prisma.player.count({
+      where: {
+        gameId: game.id
+      }
+    })
+
     const newPlayer = await prisma.player.create({
       data: {
         name: args.name,
         gameId: args.gameId,
-        score: 0
+        score: 0,
+        position: playerCount
       }
     })
 
@@ -76,11 +83,42 @@ export const PlayerMutationResolvers = {
       throw new UserInputError(message)
     }
 
-    return await prisma.player.delete({
+    const deletedPlayer = await prisma.player.delete({
       where: {
         id: args.id
       }
     })
+
+    // update players position
+    const players = await prisma.player.findMany({
+      where: {
+        gameId: args.gameId
+      },
+      orderBy: {
+        position: Prisma.SortOrder.asc
+      }
+    })
+
+    // n+1, how to do this differently?
+    let i = 0
+    const updatePromises: Promise<Player>[] = []
+
+    for(let player of players) {
+      updatePromises.push(prisma.player.update({
+        data: {
+          position: i
+        },
+        where: {
+          id: player.id
+        }
+      }))
+
+      i++
+    }
+
+    await Promise.all(updatePromises)
+
+    return deletedPlayer
   }
 }
 

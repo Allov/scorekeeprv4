@@ -11,6 +11,15 @@ export interface IGameUpdateInput {
   newName: string,
 }
 
+export interface IResetGameScoreInput {
+  id: string,
+}
+
+export interface IReorderedPlayersInput {
+  id: string,
+  playerIds: string[],
+}
+
 export interface Game {
   id: string,
   name: string,

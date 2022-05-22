@@ -5,6 +5,10 @@ export const prisma = new PrismaClient({
   log: [{
     emit: 'event',
     level: 'query'
+  },
+  {
+    emit: 'stdout',
+    level: 'error',
   }]
 })
 

@@ -1,21 +1,25 @@
 import 'source-map-support/register'
 import { ApolloServer } from 'apollo-server-express'
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import { resolvers } from './root.resolvers'
 import { typeDefs } from './root.graphql'
 import express, { Request, Response } from 'express'
 import session from 'express-session'
 import MongoDBStoreModule from 'connect-mongodb-session'
-import http from 'http'
+import https from 'https'
 import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
 import { ScorekeeprContext } from './scorekeepr-context';
 import { User } from './users/user.types';
 import { prisma } from './prisma-singleton'
+import fs from 'fs'
 
 async function startApolloServer(typeDefs: any, resolvers: any) {
   const app = express()
-  const httpServer = http.createServer(app)
+  const httpServer = https.createServer({
+    key: fs.readFileSync(process.env.SSL_KEY_FILE as string),
+    cert: fs.readFileSync(process.env.SSL_CRT_FILE as string)
+  }, app)
 
   var MongoDBStore = MongoDBStoreModule(session)
 
@@ -62,13 +66,13 @@ async function startApolloServer(typeDefs: any, resolvers: any) {
   server.applyMiddleware({
     app,
     cors: {
-      origin: ['https://studio.apollographql.com'],
+      origin: ['https://studio.apollographql.com', 'https://localhost:3000', 'https://10.0.0.4:3000'],
       credentials: true
     }
   })
 
   await new Promise<void>(resolve => httpServer.listen({ port: 4000 }, resolve))
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  console.log(`🚀 Server ready at https://localhost:4000${server.graphqlPath}`)
 }
 
 async function getUser(token: string, req: Request): Promise<User> {

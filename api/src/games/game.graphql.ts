@@ -24,5 +24,7 @@ export const gameTypeDefs = gql`
   extend type Mutation {
     createGame(name: String, playerCount: Int): CreatedGame
     updateGame(id: String, newName: String): Game
+    resetGameScore(id: ID!): Game
+    reorderPlayers(gameId: ID!, playerIds: [ID!]): Game
   }
 `

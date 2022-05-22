@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './store'
+import { client } from './apollo-client'
+import { ApolloProvider } from '@apollo/client'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,26 +14,28 @@ const root = ReactDOM.createRoot(
 
 // handles the window height on mobile where sometimes the address bar is visible and sometimes not.
 // a css variable named --vh will be updated with the true viewport height in px.
-let timeout: number = -1;
+// let timeout: number = -1
 const vh = window.innerHeight
 document.documentElement.style.setProperty('--vh', `${vh}px`)
 
 window.addEventListener('resize', () => {
   // We execute the same script as before
-  window.clearTimeout(timeout)
+  // window.clearTimeout(timeout)
 
-  timeout = window.setTimeout(() => {
-    const vh = window.innerHeight;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }, 250)
+  // timeout = window.setTimeout(() => {
+    const vh = window.innerHeight
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
+  //}, 50)
 
-});
+})
 
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ApolloProvider>
   </Provider>
 )
 

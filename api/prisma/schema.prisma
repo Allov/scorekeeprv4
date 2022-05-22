@@ -18,11 +18,12 @@ model Game {
 }
 
 model Player {
-  id     String  @id @default(auto()) @map("_id") @db.ObjectId
-  gameId String  @db.ObjectId
-  game   Game    @relation(fields: [gameId], references: [id])
-  name   String
-  score  Int     @default(0)
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  gameId   String @db.ObjectId
+  game     Game   @relation(fields: [gameId], references: [id])
+  name     String
+  score    Int    @default(0)
+  position Int    @default(0)
 }
 
 model User {

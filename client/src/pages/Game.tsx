@@ -60,6 +60,7 @@ const gameByIdQuery = gql`
     game(id: $id) {
       id,
       name,
+      isAdmin,
       players {
         id,
         name,
@@ -153,7 +154,6 @@ function Game() {
   const [orderingMode, setOrderingMode] = useState(false)
   const [firstRender, setFirstRender] = useState(true)
   const bottomDiv: React.RefObject<HTMLInputElement> = useRef(null)
-
 
   const { data } = useQuery(gameByIdQuery, { variables: { id: parameters.id } })
   const [createPlayerAndAddToGame] = useMutation(addPlayerToGameMutation, {
@@ -326,25 +326,6 @@ function Game() {
     })
   }
 
-  // function DraggablePlayerRow(props: { player: Player, i: number }) {
-  //   // const dragControls = useDragControls()
-  //   // function handleDragStart(e: React.PointerEvent) {
-  //   //   if (dragControls) {
-  //   //     console.log('yo')
-  //   //     dragControls.start(e)
-  //   //     // e.preventDefault()
-  //   //   }
-  //   // }
-  //   return (
-  //     // <motion.div initial="out" animate="in" exit="out" variants={playerAnimation2} transition={{ delay: props.i * .04 }}>
-  //     <Reorder.Item value={props.player} className='flex'>
-  //       <PlayerRow index={props.i} name={props.player.name} score={props.player.score} listEditMode />
-  //     </Reorder.Item>
-  //     // </motion.div>
-  //   )
-  // }
-
-
   if (data) {
     return (
       <>
@@ -393,6 +374,7 @@ function Game() {
                       index={i}
                       name={player.name}
                       score={player.score}
+                      disableEditMode={!data.game.isAdmin}
                       nameChanged={(newName) => handleUpdatePlayer(player, newName, player.score)}
                       scoreChanged={(newScore) => handleUpdatePlayer(player, player.name, newScore)}
                     />
@@ -403,7 +385,12 @@ function Game() {
             <div className='min-h-[1rem]' ref={bottomDiv} />
           </motion.div>
         </div>
-        <motion.footer initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 100 }} className="block fixed bottom-0 z-50 w-full keyboard-hidden">
+        <motion.footer
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 100 }}
+          className={`block fixed bottom-0 z-50 w-full keyboard-hidden ${data.game.isAdmin ? '' : 'hidden'}`}
+        >
           <div className="flex justify-between text-slate-100 bg-gradient-to-b from-slate-900 to-slate-800 h-[8vh]">
             <MenuButton onClick={handleShare} disabled={orderingMode}>
               <ShareIcon className="h-5 w-5" />

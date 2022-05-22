@@ -27,7 +27,9 @@ export const GamePropertyResolvers = {
   id: (game: Game) => game.id,
   name: (game: Game) => game.name,
   shareId: (game: Game) => game.shareId,
-  creatorId: (game: Game) => game.creatorId,
+  isAdmin: async (game: Game, _: any, context: ScorekeeprContext) => {
+    return game.creatorId == context.user.id
+  },
   players: (game: Game) => {
     return prisma.player.findMany({
       where: {

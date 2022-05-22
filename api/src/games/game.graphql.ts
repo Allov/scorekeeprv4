@@ -5,7 +5,7 @@ export const gameTypeDefs = gql`
     id: ID!
     name: String!
     shareId: String!
-    creatorId: String!
+    isAdmin: Boolean!
     players: [Player]
   }
 

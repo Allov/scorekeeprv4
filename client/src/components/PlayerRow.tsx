@@ -13,6 +13,7 @@ export type PlayerRowProps = {
   name: string,
   score: number,
   listEditMode?: boolean,
+  disableEditMode?: boolean,
   nameChanged?: NameChangedHandler,
   scoreChanged?: ScoreChangedHandler,
   playerDeleted?: PlayerDeletedHandler,
@@ -29,6 +30,7 @@ export default function PlayerRow(props: PlayerRowProps) {
   const [scoreInputFocused, setScoreInputFocused] = useState(false)
   const [nameInputFocused, setNameInputFocused] = useState(false)
   const internalListEditMode = props.listEditMode || false
+  const internalDisableEditMode = props.disableEditMode || false
 
   function handleIncrement() {
     if (props.scoreChanged) {
@@ -49,6 +51,8 @@ export default function PlayerRow(props: PlayerRowProps) {
   }
 
   function toggleEditScore() {
+    if (nameEditMode || props.listEditMode || internalDisableEditMode) return
+
     setEditScore(props.score.toString())
     setScoreEditMode(!scoreEditMode)
 
@@ -69,7 +73,7 @@ export default function PlayerRow(props: PlayerRowProps) {
   }
 
   function toggleNameEditMode() {
-    if (scoreEditMode) return;
+    if (scoreEditMode || props.listEditMode || internalDisableEditMode) return
 
     setNameEditMode(!nameEditMode)
     setNameInputFocused(nameEditMode)
@@ -126,14 +130,18 @@ export default function PlayerRow(props: PlayerRowProps) {
   })
 
   function handleScoreInputKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key == 'Enter') {
+    if (e.key == 'Enter' || e.key == 'Tab') {
       toggleEditScore()
+    } else if (e.key == 'Escape') {
+      handleScoreCancel()
     }
   }
 
   function handleNameInputKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key == 'Enter') {
+    if (e.key == 'Enter' || e.key == 'Tab') {
       toggleNameEditMode()
+    } else if (e.key == 'Escape') {
+      handleNameCancel()
     }
   }
 
@@ -233,7 +241,7 @@ export default function PlayerRow(props: PlayerRowProps) {
         </>
         :
         <>
-          <button className={`flex-none ${internalListEditMode || scoreEditMode || nameEditMode ? 'hidden' : ''}`} onClick={handleDecrement}>
+          <button className={`flex-none ${internalListEditMode || scoreEditMode || nameEditMode || internalDisableEditMode ? 'hidden' : ''}`} onClick={handleDecrement}>
             <MinusCircleIcon className="h-7 w-7" />
           </button>
           <p
@@ -243,7 +251,7 @@ export default function PlayerRow(props: PlayerRowProps) {
           >
             {props.score < 0 ? props.score : `+${props.score}`}
           </p>
-          <button className={`flex-none ${internalListEditMode || scoreEditMode || nameEditMode ? 'hidden' : ''}`} onClick={handleIncrement}>
+          <button className={`flex-none ${internalListEditMode || scoreEditMode || nameEditMode || internalDisableEditMode ? 'hidden' : ''}`} onClick={handleIncrement}>
             <PlusCircleIcon className="h-7 w-7" />
           </button>
         </>
